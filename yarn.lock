@@ -5612,6 +5612,11 @@ __metadata:
     webpack-manifest-plugin: 4.1.1
     webpack-merge: 5.8.0
     webpack-retry-chunk-load-plugin: 3.0.0
+  bin:
+    cross-env: ./dist/bins/proxy.js
+    redwood: ./dist/bins/redwood.js
+    rw: ./dist/bins/redwood.js
+    webpack: ./dist/bins/proxy.js
   languageName: unknown
   linkType: soft
 
