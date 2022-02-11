@@ -9,11 +9,10 @@
   },
   "license": "MIT",
   "bin": {
-    "cross-env": "./dist/bins/proxy.js",
+    "cross-env": "./dist/bins/cross-env.js",
     "eslint": "./dist/bins/eslint.js",
     "redwood": "./dist/bins/redwood.js",
-    "rw": "./dist/bins/redwood.js",
-    "webpack": "./dist/bins/proxy.js"
+    "rw": "./dist/bins/redwood.js"
   },
   "files": [
     "config",

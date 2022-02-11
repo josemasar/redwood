@@ -1,4 +1,5 @@
 import fs from 'fs'
+import path from 'path'
 
 import execa from 'execa'
 import Listr from 'listr'
@@ -12,7 +13,6 @@ import { timedTelemetry, errorTelemetry } from '@redwoodjs/telemetry'
 
 import { getPaths } from '../lib'
 import c from '../lib/colors'
-import { generatePrismaCommand } from '../lib/generatePrismaClient'
 import checkForBabelConfig from '../middleware/checkForBabelConfig'
 
 import { getTasks as getPrerenderTasks } from './prerender'
@@ -121,12 +121,21 @@ export const handler = async ({
       prisma && {
         title: 'Generating Prisma Client...',
         task: async () => {
-          const { cmd, args } = generatePrismaCommand(rwjsPaths.api.dbSchema)
-          return execa(cmd, args, {
-            stdio: verbose ? 'inherit' : 'pipe',
-            shell: true,
-            cwd: rwjsPaths.api.base,
-          })
+          const schema = rwjsPaths.api.dbSchema
+
+          return execa(
+            `${path.join(rwjsPaths.base, 'node_modules/.bin/prisma')} ${[
+              'generate',
+              schema && `--schema="${schema}"`,
+            ]
+              .filter(Boolean)
+              .join(' ')}`,
+            {
+              stdio: verbose ? 'inherit' : 'pipe',
+              shell: true,
+              cwd: rwjsPaths.api.base,
+            }
+          )
         },
       },
     side.includes('api') && {
